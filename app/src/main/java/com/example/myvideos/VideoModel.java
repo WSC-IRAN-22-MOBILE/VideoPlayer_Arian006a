@@ -7,7 +7,7 @@ import android.provider.MediaStore;
 public class VideoModel {
     public long id;
     public String title;
-    public long dateAdded; // seconds since epoch
+    public long dateAdded;
 
     public VideoModel(long id, String title, long dateAdded) {
         this.id = id;

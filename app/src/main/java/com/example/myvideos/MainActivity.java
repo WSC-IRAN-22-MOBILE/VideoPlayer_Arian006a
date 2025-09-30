@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         top.setOnLongClickListener(v -> {
             String pass = prefs.getString(KEY_PASSWORD, null);
             if (pass == null) {
-                Toast.makeText(MainActivity.this, "ابتدا باید رمز تعیین شود", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Set the password first", Toast.LENGTH_SHORT).show();
                 return true;
             }
             showEnterPasswordDialog(entered -> {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent i = new Intent(MainActivity.this, HiddenActivity.class);
                     startActivity(i);
                 } else {
-                    Toast.makeText(MainActivity.this, "رمز اشتباه است", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Password is wrong", Toast.LENGTH_SHORT).show();
                 }
             });
             return true;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     boolean granted = true;
                     for (Boolean b : result.values()) if (!b) granted = false;
                     if (granted) loadVideos();
-                    else Toast.makeText(this, "دسترسی لازم است تا ویدیوها نمایش داده شوند", Toast.LENGTH_SHORT).show();
+                    else Toast.makeText(this, "Access is required to display videos.", Toast.LENGTH_SHORT).show();
                 }
         );
 
@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                 long id = cursor.getLong(idIdx);
                 String name = cursor.getString(nameIdx);
                 long date = cursor.getLong(dateIdx);
-                // filter hidden by id
                 if (hidden.contains(String.valueOf(id))) continue;
                 videos.add(new VideoModel(id, name, date));
             }
@@ -167,73 +166,65 @@ public class MainActivity extends AppCompatActivity {
         Set<String> hidden = new HashSet<>(prefs.getStringSet(KEY_HIDDEN, new HashSet<>()));
         String sid = String.valueOf(id);
         if (hidden.contains(sid)) {
-            Toast.makeText(this, "این ویدیو قبلاً پنهان شده", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "This video has already been hidden.", Toast.LENGTH_SHORT).show();
             return;
         }
         hidden.add(sid);
         prefs.edit().putStringSet(KEY_HIDDEN, hidden).apply();
-        Toast.makeText(this, "ویدیو به پنهان‌ها اضافه شد", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Video added to hidden.", Toast.LENGTH_SHORT).show();
         loadVideos();
     }
 
     private void showSetPasswordDialog(OnPasswordResult cb) {
-        // 1. Inflate کردن XML کارت‌ویو
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_pass, null);
 
-        // 2. گرفتن ویجت‌ها
         EditText etPassword = dialogView.findViewById(R.id.etPassword);
         Button btnOk = dialogView.findViewById(R.id.buttonOk);
 
-        // 3. ساخت دیالوگ با لایه سفارشی
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(dialogView)
                 .create();
         dialog.show();
 
-        // 4. تنظیم رفتار دکمه OK
         btnOk.setOnClickListener(v -> {
             String entered = etPassword.getText().toString().trim();
 
             if (entered.length() < 1) {
-                Toast.makeText(this, "رمز معتبر نیست", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "The password is not valid", Toast.LENGTH_SHORT).show();
                 cb.onResult(false);
                 return;
             }
 
             prefs.edit().putString(KEY_PASSWORD, entered).apply();
-            Toast.makeText(this, "رمز ذخیره شد", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Password saved", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
             cb.onResult(true);
         });
     }
 
     private void showEnterPasswordDialog(OnPasswordResult cb) {
-        // 1. Inflate کردن XML کارت‌ویو
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_pass, null);
 
-        // 2. گرفتن ویجت‌ها
         EditText etPassword = dialogView.findViewById(R.id.etPassword);
         Button btnOk = dialogView.findViewById(R.id.buttonOk);
 
-        // 3. ساخت دیالوگ با لایه سفارشی
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(dialogView)
                 .create();
         dialog.show();
 
-        // 4. تنظیم رفتار دکمه OK
         btnOk.setOnClickListener(v -> {
             String entered = etPassword.getText().toString().trim();
             String savedPass = prefs.getString(KEY_PASSWORD, "");
 
             if (entered.equals(savedPass)) {
-                Toast.makeText(this, "رمز صحیح است", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "The password is correct", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
                 cb.onResult(true);
             } else {
-                Toast.makeText(this, "رمز اشتباه است", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Password is wrong", Toast.LENGTH_SHORT).show();
                 cb.onResult(false);
             }
         });

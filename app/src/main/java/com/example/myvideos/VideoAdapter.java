@@ -44,12 +44,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VH> {
         VideoModel m = list.get(position);
         holder.title.setText(m.title);
 
-        // DATE_ADDED is seconds since epoch -> convert to ms
         String date = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
                 .format(new Date(m.dateAdded * 1000));
         holder.date.setText(date);
 
-        // load thumbnail via content Uri
         Glide.with(ctx)
                 .load(m.getContentUri())
                 .centerCrop()
