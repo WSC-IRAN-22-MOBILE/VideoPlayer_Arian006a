@@ -10,6 +10,7 @@ public class VideoModel {
     public long dateAdded;
 
     public VideoModel(long id, String title, long dateAdded) {
+
         this.id = id;
         this.title = title;
         this.dateAdded = dateAdded;

@@ -85,9 +85,6 @@ public class HiddenActivity extends AppCompatActivity {
             return true;
         });
 
-
-
-
     }
 
     private void loadHidden() {

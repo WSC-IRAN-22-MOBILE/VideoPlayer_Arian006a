@@ -40,6 +40,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
             vv.start();
         } else {
             finish();
+
         }
     }
 }

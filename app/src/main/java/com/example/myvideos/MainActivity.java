@@ -230,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     interface OnPasswordResult {
         void onResult(boolean success);
     }

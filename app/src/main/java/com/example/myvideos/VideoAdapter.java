@@ -68,6 +68,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VH> {
     static class VH extends RecyclerView.ViewHolder {
         ImageView thumb;
         TextView title, date;
+
         VH(View v) {
             super(v);
             thumb = v.findViewById(R.id.thumb);
