@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">My Videos</string>
+    <string name="set_password_title">Set a Password</string>
+    <string name="enter_password_title">Enter Your Password</string>
+    <string name="hidden_videos_title">Hidden Videos</string>
+    <string name="home">Home</string>
+</resources>
